@@ -186,12 +186,16 @@ extension Pager {
 
             #if !os(tvOS)
             var wrappedView: AnyView = swipeInteractionArea == .page ? AnyView(stack) : AnyView(stack.contentShape(Rectangle()))
-            wrappedView = AnyView(wrappedView.gesture(allowsDragging ? swipeGesture : nil, priority: gesturePriority)
-                                    .onChange(of: isPressed, perform: { (pressed) in
-                                        if !pressed {
-                                            self.onDragGestureEnded()
-                                        }
-                                    }))
+            if #available(iOS 14.0, *) {
+                wrappedView = AnyView(wrappedView.gesture(allowsDragging ? swipeGesture : nil, priority: gesturePriority)
+                                        .onChange(of: isPressed, perform: { (pressed) in
+                                            if !pressed {
+                                                self.onDragGestureEnded()
+                                            }
+                                        }))
+            } else {
+                wrappedView = AnyView(wrappedView.gesture(allowsDragging ? swipeGesture : nil, priority: gesturePriority))
+            }
             #else
             let wrappedView = stack
             #endif

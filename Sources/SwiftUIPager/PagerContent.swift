@@ -258,7 +258,7 @@ extension Pager.PagerContent {
                 onDraggingBegan?()
             }
             
-            self.allowScrollView?(abs(value.translation.height) > abs(value.translation.width) * 3)
+            self.allowScrollView?(abs(value.translation.height) > abs(value.translation.width) * 5)
             
             let lastLocation = self.lastDraggingValue?.location ?? value.location
             let swipeAngle = (value.location - lastLocation).angle ?? .zero
